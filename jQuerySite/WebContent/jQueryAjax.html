@@ -129,7 +129,13 @@
 				//1. 呼叫FirstServlet
 				//2. 傳 name=Jack及age=30的資料給FirstServlet
 				//3. 將Server端回傳的結果加上h2的標籤,顯示在show的div中
-
+				//$.get('server端程式','傳給server端程式的資料','接收server端回傳的結果')
+				 $.get('FirstServlet',{"name":"Mary","age":22},function(data){
+					 //data 就是server回傳的結果  = Hello Jack, Your are 30 years old.
+				     $('#show').html("<h2>" + data + "</h2>");
+				 
+				 })
+                
 			});
 
 			$('#buttonPost').click(function() {

@@ -110,12 +110,46 @@
 	<script src="js/jquery-1.12.3.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
 	<script>
-		$('h1').css('color','green').mouseover(function(){
-			$(this).css('color','red');
-		}).mouseout(function(){
-			$(this).css('color','green');
+		$(function(){
+// 			var hs = document.getElementsByTagName("h1");
+// 			for(var i=0,max=hs.length;i<max;i++){
+// 				hs[i].style.color = "red";
+// 				hs[i].onmouseover = over;
+// 				hs[i].onmouseout = out;
+// 			}
+			
+			
+			
+// 			$('h1').css('color','red');	
+// // 			$('h1').mouseover(function(){
+				
+// // 			});
+//             $('h1').mouseover(over);
+// 			$('h1').mouseout(out);
+
+            //看到selectors重複了，就要想想看可不可以合併成一個
+            $('h1').css('color','red')
+                   .mouseover(over)
+                   .mouseout(out);
+            
+			function over(){
+				//this表示觸發事件的物件
+				//console.log(this);
+				
+				//this vs $(this)
+				
+				//this javascript				
+				//this.style.color="green";
+				
+				//$(this) 把this轉成jQuery物件,才能使用jQuery提供的方法
+				$(this).css('color','green');
+			}
+			function out(){
+				//this.style.color = "red";
+				$(this).css('color','red');
+			}
+			
 		})
-		
 	</script>
 </body>
 

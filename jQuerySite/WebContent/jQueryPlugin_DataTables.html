@@ -119,34 +119,34 @@
 	<script type="text/javascript" src="https://cdn.datatables.net/u/bs/jq-2.2.3,dt-1.10.12/datatables.min.js"></script>
     <script>
         $(function () {
-//             $('#table1').DataTable({
-//                "ajax": "ProductsAll",
-//                "columns": [
-//                    { "data": "ProductID" },
-//                    { "data": "ProductName" },
-//                    { "data": "UnitPrice" },
-//                    { "data": "UnitsInStock" }
-//                ]
-//             });
+            $('#table1').DataTable({
+               "ajax": "ProductsAll",
+               "columns": [
+                   { "data": "ProductID" },
+                   { "data": "ProductName" },
+                   { "data": "UnitPrice" },
+                   { "data": "UnitsInStock" }
+               ]
+            });
 
-            $.getJSON('ProductsAll', {  }, function (data) {
+//             $.getJSON('ProductsAll', {  }, function (data) {
               
-                $('#table1>tbody').empty();
-                $.each(data.data, function (i, product) {
-                    //console.log(product.ProductName);
-                    var cell1 = $("<td></td>").text(product.ProductID);
-                    var cell2 = $("<td></td>").text(product.ProductName);
-                    var cell3 = $("<td></td>").text(product.UnitPrice);
-                    var cell4 = $("<td></td>").text(product.UnitsInStock);
+//                 $('#table1>tbody').empty();
+//                 $.each(data.data, function (i, product) {
+//                     //console.log(product.ProductName);
+//                     var cell1 = $("<td></td>").text(product.ProductID);
+//                     var cell2 = $("<td></td>").text(product.ProductName);
+//                     var cell3 = $("<td></td>").text(product.UnitPrice);
+//                     var cell4 = $("<td></td>").text(product.UnitsInStock);
                   
 
-                    var row = $('<tr></tr>').append([cell1, cell2, cell3, cell4]);
+//                     var row = $('<tr></tr>').append([cell1, cell2, cell3, cell4]);
 
-                    $('#table1>tbody').append(row);
-                });
+//                     $('#table1>tbody').append(row);
+//                 });
 
             
-            })
+//             })
         });
 
     </script>

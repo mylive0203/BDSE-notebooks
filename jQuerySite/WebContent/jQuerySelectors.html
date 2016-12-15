@@ -68,8 +68,13 @@
 					<!-- 每頁不同的內容從這裡開始 -->
 
 
-					<a href="a.doc">A(doc)</a> | <a href="a.pdf">A(pdf)</a> <br /> <a
-						href="b.doc">B(doc)</a> | <a href="b.pdf">B(pdf)</a> <br /> <input
+					<a href="a.doc">A(doc)</a> | 
+					<a href="a.pdf">A(pdf)</a> <br /> 
+					<a href="b.doc">B(doc)</a> | 
+					<a href="bdoc.pdf">B(pdf)</a> <br /> 
+					
+					
+					<input
 						type="text" value="請輸入" /><br /> <input type="text" value="請輸入" /><br />
 					<input type="text" value="請輸入" /><br /> <input type="button"
 						value="送出" />
@@ -158,7 +163,27 @@
 			//text-decoration:none
 			//background:url(Images/pdf_icon.gif) no-repeat
 			//padding-left:20px
+            
+			//css([value,value,value])、css({string:value,string:value})
+			
+			
+// 			$('a[href$="doc"]').css('background','url(images/word_icon.gif) no-repeat')
+// 			                   .css('padding-left','20px');
+// 			$('a[href$="pdf"]').css('background-color','orange');
+            
+            var s1 = {
+                      'background':'url(images/word_icon.gif) no-repeat',
+            		  'padding-left':'20px'
+                      };
 
+			$('a[href$="doc"]').css(s1);
+            
+			$('a[href$="pdf"]').css({
+				'background':'url(images/pdf_icon.gif) no-repeat',
+      		    'padding-left':'20px'
+			});
+			
+			
 			//=============================	
 
 			//==== Basic Filter Selectors ====

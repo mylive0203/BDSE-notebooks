@@ -10,15 +10,16 @@
             color: orange;
                 text-decoration: underline;
                 border: 1px red solid;
-                width: 400px;
+                width: 600px;
                 text-align: center;
                 background-color:green;
         }
+ 
          .s2{
             color: green;
                 text-decoration: none;
                 border: 3px red double;
-                width: 400px;
+                width: 600px;
                 text-align: center;
                 background-color:red;
         }
@@ -129,7 +130,18 @@
 	<script src="js/bootstrap.min.js"></script>
 	<script>
 		$(function(){
+			$('h1').addClass('s1')
+			       .hover(over,out);
+			function over(){
+				$(this).removeClass('s1').addClass('s2');
+			}
+			function out(){
+				$(this).removeClass('s2').addClass('s1');
+			}
 			
+			$('#buttonToggle').click(function(){
+				$('#myH').toggleClass('s2');
+			});
 			
 		})
 	</script>

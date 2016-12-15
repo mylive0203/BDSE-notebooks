@@ -56,7 +56,7 @@
 			</div>
 			<!-- 每頁不同的內容從這裡開始 -->
           <!--  style="display:none" -->
-  <table id="table1" class="highchart" data-graph-container-before="1" data-graph-type="column">
+  <table id="table1" class="highchart" data-graph-container-before="1" data-graph-type="column" style="display:none">
   <caption>Total Sales By Month</caption>
             <thead>
                 <tr>
@@ -136,7 +136,7 @@
                     tb.append(row);
                 });
                 
-               // $('#table1.highchart').highchartTable();
+               $('#table1.highchart').highchartTable();
 
             
             })

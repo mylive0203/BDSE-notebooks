@@ -50,14 +50,19 @@
 </div>
 		    </div>
 		    <div class="col-md-9">
-		    <div class="jumbotron">
+	<div class="jumbotron">
 			<div class="page-header">
 				<h3>jQuery DOM</h3>
 			</div>
 			<!-- 每頁不同的內容從這裡開始 -->
- <a href="jQuerySelectors.html">Selectors</a> | <a href="jQueryFirst.html">First</a> | <a href="http://tw.yahoo.com">YAHOO</a> | <a href="http://www.google.com.tw">Goggle</a>
+	 <a href="jQuerySelectors.html">Selectors</a> | 
+	 <a href="jQueryFirst.html">First</a> | 
+	 <a href="http://tw.yahoo.com">YAHOO</a> | 
+	 <a href="http://www.google.com.tw">Goggle</a>
     <hr />
-    <input type="text" id="txtName" /><input type="button" value="Click" id="buttonClick" /><span id="span1"></span>
+    <input type="text" id="txtName" />
+    <input type="button" value="Click" id="buttonClick" />
+    <span id="span1"></span>
     <br />
     <select id="select1">
         <option value="a">Item1</option>
@@ -130,11 +135,24 @@
 	<script>
     $(function () {
         //設定txtName中的值
-        
+        $('#txtName').val('guest'); //寫入
 
         $('#buttonClick').click(function () {
            //將使用者輸入在txtName中的內容讀出顯示在span1中
+           //value屬性的讀寫使用val()
+           var v = $('#txtName').val(); //讀取
+           
+           //<span>aaa</span>裡面的文字讀寫使用text()
+           //$('#span1').text("Hello " + v);
+           //console.log($('#span1').text());
+           
+           
            //將使用者輸入在txtName中的內容讀出加上<h2>的標籤顯示在span1中
+           //$('#span1').text("<h2>Hello " + v + "</h2>");
+           $('#span1').html("<h2>Hello " + v + "</h2>");
+           
+           console.log($('#span1').text());           
+           console.log($('#span1').html());
             
         });
 
@@ -150,11 +168,11 @@
  	   });
 
         
-      
-        //找到網頁上的連結標籤，加上target=_blank屬性
-       
-        //找到網頁上要連結到外部網站的連結標籤，加上target=_blank屬性
         
+        //找到網頁上的連結標籤，加上target=_blank屬性
+       // $('div.jumbotron>a').attr('target','_blank');
+        //找到網頁上要連結到外部網站的連結標籤，加上target=_blank屬性
+        $('div.jumbotron>a[href^="http"]').attr('target','_blank');
         
 
        //attr() vs prop()
