@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Insert title here</title>
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<style>
+#div1 {
+	width: 360px;
+}
+
+#alligator {
+	position: absolute;
+	left: 900px;
+	top: 400px;
+}
+
+#img1 {
+	width: 490px;
+	height: 660px;
+}
+</style>
+
+
+</head>
+<body>
+	<div class="container">
+		<nav class="navbar navbar-default">
+			<div class="container-fluid">
+				<!-- Brand and toggle get grouped for better mobile display -->
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle collapsed"
+						data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"
+						aria-expanded="false">
+						<span class="sr-only">Toggle navigation</span> <span
+							class="icon-bar"></span> <span class="icon-bar"></span> <span
+							class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" href="#">jQuery Site</a>
+				</div>
+
+
+			</div>
+			<!-- /.container-fluid -->
+		</nav>
+	</div>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-3">
+				<div class="list-group">
+					<a href="jQueryFirst.html" class="list-group-item">jQueryFirst</a>
+					<a href="WritingStyle.html" class="list-group-item">jQueryWritingStyle</a>
+					<a href="jQuerySelectors.html" class="list-group-item">jQuerySelectors</a>
+					<a href="jQueryDOM.html" class="list-group-item">jQueryDOM</a> <a
+						href="jQueryCSS.html" class="list-group-item">jQueryCSS</a> <a
+						href="jQueryEach.html" class="list-group-item">jQueryEach</a> 
+					 <a href="resize.html" class="list-group-item" target="_blank">jQueryEvent</a>
+  <a href="jQueryEvent.html" class="list-group-item">jQueryEventBinding</a>
+   <a href="jQueryEffects.html" class="list-group-item">jQueryEffects</a>
+					<a href="jQueryAjax.html" class="list-group-item">jQueryAjax</a> <a
+						href="jQueryUI.html" class="list-group-item">jQueryUI</a>
+<a href="jQueryPlugin_DataTables.html" class="list-group-item">jQueryPlugin</a>
+  <a href="Register.html" class="list-group-item">作業</a>
+  <a href="Products.html" class="list-group-item">練習</a>
+				</div>
+			</div>
+			<div class="col-md-9">
+				<div class="jumbotron">
+					<div class="page-header">
+						<h3>jQuery Effects</h3>
+					</div>
+					<!-- 每頁不同的內容從這裡開始 -->
+					<input type="button" value="顯示隱藏" id="buttonShowHide"
+						class="btn btn-primary"> <input type="button" value="滑動效果"
+						id="buttonSlide" class="btn btn-success"> <input
+						type="button" value="淡入淡出" id="buttonFade" class="btn btn-info">
+					<div id="div1">
+						<img id="img1" src="images/transformer.jpg" alt="transformer">
+					</div>
+					<img src="images/alligator.gif" id="alligator">
+
+
+
+					<!-- 每頁不同的內容到這裡結束 -->
+				</div>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-md-4">
+				<h2>jQuery</h2>
+				<p>jQuery的語法設計使得許多操作變得容易，如操作文件（document）、選擇文件物件模型（DOM）元素、建立動畫效果、處理事件、以及開發Ajax程式。jQuery也提供了給開發人員在其上建立外掛模組的能力。這使開發人員可以對底層互動與動畫、高階效果和高階主題化的元件進行抽象化。模組化的方式使jQuery函式庫能夠建立功能強大的動態網頁以及網路應用程式。
+				</p>
+				<p>
+					<a class="btn btn-primary"
+						href="https://zh.wikipedia.org/wiki/JQuery" role="button">詳細資料
+						&raquo;</a>
+				</p>
+			</div>
+			<div class="col-md-4">
+				<h2>jQueryUI</h2>
+				<p>jQuery UI是一套JavaScript 函式庫，提供抽象化、可自訂主題的GUI控制項與動畫效果。基於jQuery
+					JavaScript函式庫，可用來建構互動式的網際網路應用程式。在2007年9月約翰·雷西格於jquery.com部落格裡的一篇文章裡正式公諸於世[2]。最新的版本需要jQuery
+					2.1.1或更新的版本。</p>
+				<p>
+					<a class="btn btn-primary"
+						href="https://zh.wikipedia.org/wiki/JQuery_UI" role="button">詳細資料
+						&raquo;</a>
+				</p>
+			</div>
+			<div class="col-md-4">
+				<h2>jQueryMobile</h2>
+				<p>jQuery Mobile is a touch-optimized web framework (also known
+					as a mobile framework), more specifically a JavaScript library,
+					currently being developed by the jQuery project team. The
+					development focuses on creating a framework compatible with a wide
+					variety of smartphones and tablet computers</p>
+				<p>
+					<a class="btn btn-primary"
+						href="https://en.wikipedia.org/wiki/JQuery_Mobile" role="button">詳細資料
+						&raquo;</a>
+				</p>
+			</div>
+		</div>
+
+		<!-- Site footer -->
+		<footer class="footer">
+			<p>&copy; IIIEDU</p>
+		</footer>
+
+	</div>
+	<!-- /container -->
+
+
+	<script src="js/jquery-1.12.3.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script>
+		$(function() {
+			$('#buttonShowHide').click(function() {
+				//練習一 show(),hide(),toggle()
+				//1. 使用兩秒鐘的時間隱藏(hide)div1元素
+				//2. 完成之後再用兩秒鐘的時間顯示(show)div1元素
+				//3. 瀏覽網頁看看效果
+				//4. 注解上面所寫的程式
+				//5. 使用toggle方法顯示及隱藏div1元素  
+				//$('#div1').hide('explode',2000,function(){
+				//	$('#div1').show('shake',1500);
+				//});
+
+			});
+
+			$('#buttonSlide').click(function() {
+				//練習二 slideUp(),slideDown(),slideToggle()
+				//1. 使用兩秒鐘的時間讓div1元素向上(slideUp)隱藏
+				//2. 完成之後再用兩秒鐘的時間讓div1元素向下(slideDown)顯示
+				//3. 瀏覽網頁看看效果
+				//4. 注解上面所寫的程式
+				//5. 使用slideToggle方法,讓div1元素向上隱藏及向上顯示
+
+			});
+
+			$('#buttonFade').click(function() {
+				//練習三 fadeIn(),fadeOut(),fadeToggle()
+				//1. 使用兩秒鐘的時間讓div1元素淡出(fadeOut)隱藏
+				//2. 完成之後再用兩秒鐘的時間讓div1元素淡入(fadeIn)顯示
+				//3. 瀏覽網頁看看效果
+				//4. 注解上面所寫的程式
+				//5. 使用fadeToggle方法,讓div1元素淡出隱藏及淡入顯示
+
+			});
+
+			//練習四
+			//1. 先將img1圖片不透明度的樣式設定成0.3(opacity:0.3)
+			//2. 瀏覽網頁img1圖片看起來是比較透明的
+			//3. 滑鼠移到img1圖片後,使用1.5秒的時間,讓此圖片的不透明度回到1
+			//4. 滑鼠離開img1圖片後,再使用1.5秒的時間,讓此圖片的不透明度回到0.3
+
+			$('#alligator').click(function() {
+				//練習五 animate()
+				//使用者點選alligator的圖片後,使用5秒鐘的時間完成下列動作
+				//向右移動到200px的位置(left:200)
+				//向上移動到0px的位置(top:0)
+				//不透明度調整成0.3(opacity:0.3)
+				//寬度調整成200px(width:200)
+				//瀏覽網頁看看效果
+
+			});
+
+		});
+	</script>
+</body>
+
+</html>
