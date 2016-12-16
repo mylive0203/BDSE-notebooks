@@ -109,16 +109,32 @@
 	$(function(){
 		
 		var names = ["Jack","Tom","Mary","Fiona"];  
-		
+// 		$.each(names,function(idx,name){
+// 			console.log(idx);
+// 			console.log(name);
+// 		})
 		
 		
 		var emp = {"name":"Jack","salary":32000,"workYears":2};
-		
+	    //console.log(emp.name);
+// 	    $.each(emp,function(name,value){
+// 	    	console.log(name);	 
+// 	    	console.log(value);	   	
+// 	    })
 		
 		var emps = [{"name":"Jack","salary":32000,"workYears":2},
 		            {"name":"Mary","salary":42000,"workYears":5},
 		            {"name":"Tom","salary":52000,"workYears":7}];
-		
+		//emps -> array
+		$.each(emps,function(idx,emp){
+			//emp -> object
+			console.log(emp.name);
+			console.log(emp.salary);
+			console.log(emp.workYears);
+//             $.each(emp,function(key,value){
+//             	console.log(value);            	
+//             })
+		})
 	
 		
 		var data = {
@@ -126,6 +142,27 @@
 	                  { name: "Mary", age: 35, contact: { home: "02-33116745", cell: "0932112654" } },
 	                  { name: "Tom", age: 26, contact: { home: "02-54346666", cell: "0955832123" } }]
 	        };
+		
+		//data -> object
+// 		$.each(data,function(key,datas){
+// 			//datas -> array
+// 		    $.each(datas,function(idx,emp){
+// 		    	//emp -> object
+// 		    	console.log(emp.name);
+// 		    	console.log(emp.age);
+// 		    	console.log(emp.contact.home);
+// 		    	console.log(emp.contact.cell);
+// 		    })
+// 		})
+			//data.emps -> array
+		    $.each(data.emps,function(idx,emp){
+		    	//emp -> object
+		    	console.log(emp.name);
+		    	console.log(emp.age);
+		    	console.log(emp.contact.home);
+		    	console.log(emp.contact.cell);
+		    })
+		
 	})
 	</script>
 </body>

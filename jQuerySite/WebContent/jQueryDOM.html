@@ -73,13 +73,13 @@
     <span id="span2"></span>
     <hr />
     <input type="button" value="check" id="buttonToggle" /><br />
-<!--     <input type="checkbox" id="Toggle" />Toggle All<br /> -->
-    <input type="checkbox" value="a1" />A1
-    <input type="checkbox" value="a2" />A2
-    <input type="checkbox" value="a3" />A3
-    <input type="checkbox" value="a4" />A4
-    <input type="checkbox" value="a5" />A5
-    <input type="checkbox" value="a6" />A6
+     <input type="checkbox" id="Toggle"/>Toggle All<br />
+    <input type="checkbox" value="a1" name="a" />A1
+    <input type="checkbox" value="a2" name="a" checked />A2
+    <input type="checkbox" value="a3" name="a" />A3
+    <input type="checkbox" value="a4" name="a" />A4
+    <input type="checkbox" value="a5" name="a" checked />A5
+    <input type="checkbox" value="a6" name="a"  />A6
      <input type="button" value="get checked"  id="buttonGet" />
     <hr />
     <h1 id="myH">write less, do more</h1>
@@ -162,8 +162,13 @@
  		   //當使用者選取不同的select1項目時
  		   //讀出此項目的索引值(index),文字(text),值(value)
  		   //將這些資料顯示在span2的span中
- 		   //alert($(this).val());
- 	
+ 		   // alert($(this).val());
+        	//alert($(this).text());
+        	//alert($(this).html());
+        	var v = $('#select1>:selected').val();
+        	var t = $('#select1>:selected').text();
+        	var i = $('#select1>:selected').index();
+        	$('#span2').html("<h2>" + i + "," + v + "," + t + "</h2>");
  		   
  	   });
 
@@ -177,42 +182,62 @@
 
        //attr() vs prop()
 
-        //console.log($(":checkbox:eq(0)").attr('checked'));
-        //console.log($(":checkbox:eq(1)").attr('checked'));
-        //console.log($(":checkbox:eq(2)").attr('checked'));
-        //console.log($(":checkbox:eq(3)").attr('checked'));
-        //console.log($(":checkbox:eq(4)").attr('checked'));
-        //console.log($(":checkbox:eq(5)").attr('checked'));  
+//         console.log($(":checkbox:eq(0)").attr('checked'));  //checked
+//         console.log($(":checkbox:eq(1)").attr('checked'));  //??   checked
+//         console.log($(":checkbox:eq(2)").attr('checked'));  //true checked
+//         console.log($(":checkbox:eq(3)").attr('checked'));  //on   checked
+//         console.log($(":checkbox:eq(4)").attr('checked'));  //no   checked
+//         console.log($(":checkbox:eq(5)").attr('checked'));  //?? undefined
 
-        //console.log($(":checkbox:eq(0)").prop('checked'));
-        //console.log($(":checkbox:eq(1)").prop('checked'));
-        //console.log($(":checkbox:eq(2)").prop('checked'));
-        //console.log($(":checkbox:eq(3)").prop('checked'));
-        //console.log($(":checkbox:eq(4)").prop('checked'));
-        //console.log($(":checkbox:eq(5)").prop('checked'));
+//         console.log($(":checkbox:eq(0)").prop('checked'));
+//         console.log($(":checkbox:eq(1)").prop('checked'));
+//         console.log($(":checkbox:eq(2)").prop('checked'));
+//         console.log($(":checkbox:eq(3)").prop('checked'));
+//         console.log($(":checkbox:eq(4)").prop('checked'));
+//         console.log($(":checkbox:eq(5)").prop('checked'));
 
         $('#Toggle').change(function(){
-            //切換所有checkbox的勾選狀態        	
-        	
+            //切換所有checkbox的勾選狀態      
+        	//console.log($(this).prop("checked"));  	
+        	//console.log($(this).attr("checked"));
+        	var b = $(this).prop("checked");
+        	$(':checkbox[name="a"]').prop("checked",b);
         })
 
         $('#buttonToggle').click(function () {            
             //切換各自checkbox的勾選狀態
-            
+            $(':checkbox[name="a"]').each(function(){
+            	var b = !$(this).prop("checked");
+            	$(this).prop("checked",b);
+            });
         });
         
         $('#buttonGet').click(function(){
         	//讀出所有被勾選checkbox的值
-        	
+        	var items = [];
+        	$(':checkbox[name="a"]:checked').each(function(){
+            	//if($(this).prop("checked")){
+            		items.push($(this).val());
+            	//}
+            });
+        	alert(items);
         });
 
-        
+        //html()
         //prepend() vs append() vs before() vs after()
-
-       
+//         $('#myH').prepend("<u>aaaa</u>")
+//                  .append("bbbb")
+//                  .before("<s>cccc</s>")
+//                  .after("dddd");
+        
+       // $("<u>aaaa</u>").prependTo('#myH');
+       // $("<s>bbbb</s>").appendTo('#myH');
+        //$() -> 將()的內容轉成jQuery物件
+        //()裡面必須是帶有標籤的內容
         
         //empty() vs remove()
-
+        //$('#myH').empty();
+        $('#myH').remove();
 
     });
 </script>

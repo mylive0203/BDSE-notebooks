@@ -128,19 +128,22 @@
 
 	<script src="js/jquery-1.12.3.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
+	<script src="js/jquery-ui.min.js"></script>
 	<script>
 		$(function(){
 			$('h1').addClass('s1')
 			       .hover(over,out);
 			function over(){
-				$(this).removeClass('s1').addClass('s2');
+				//$(this).removeClass('s1',1000).addClass('s2',1000);
+				$(this).switchClass('s1','s2',1000);
 			}
 			function out(){
-				$(this).removeClass('s2').addClass('s1');
+				//$(this).removeClass('s2',1000).addClass('s1',1000);
+				$(this).switchClass('s2','s1',1000);
 			}
 			
 			$('#buttonToggle').click(function(){
-				$('#myH').toggleClass('s2');
+				$('#myH').toggleClass('s2',1000);
 			});
 			
 		})
