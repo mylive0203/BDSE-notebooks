@@ -1,9 +1,12 @@
-﻿# HADOOP專題
+﻿# HADOOP專題12/26
 
 安裝vagrant
 http://school.soft-arch.net/blog/69382/install-vagrant-on-win
 
-----
+簡報範例
+https://hackmd.io/s/4JuJuJGhx
+
+---
 |姓名|IP|管理1|管理2|
 |:---:|--|--|--|
 |瑋|10|11|12|
@@ -14,7 +17,7 @@ http://school.soft-arch.net/blog/69382/install-vagrant-on-win
 |童|170|171|172|
 
 例如:hostname : bdseXX.example.org : XX為管理IP
-|角色|主機名稱|ip|
+|角色|主機名稱(FQDN)|ip|
 |:--:|---------|--|
 |NameNode|bdse111.example.org|111|
 |SecondaryNameNode|bdse92.example.org|92|
@@ -66,7 +69,13 @@ Test:1.在pc ping vm
 
 hostfile: ip FQDN alias
 host裡要填入每台的IP、主機名稱username
-
+_____
+### 1.開始
+> Switch to root
+> sudo -i
+### 2.Add hadoop cluster hosts to hosts file
+> nano /etc/hosts
+    
 ```
 127.0.0.1 localhost
 192.168.33.11 bdse11.example.org bdse11
@@ -82,16 +91,95 @@ host裡要填入每台的IP、主機名稱username
 192.168.33.171 bdse171.example.org bdse171
 192.168.33.172 bdse172.example.org bdse172
 ```
+_____
+1. 因為vagrant的VM每次啟動時都會重建 /etc/hosts，所以寫在vagrantfile，將裡面的nna改為主機名稱bdseXX
+2. 每台機器加入:bdseXX.vm.provision "shell", path: "scripts/sethosts.sh", run: "always"
+```javascript=
+  config.vm.define "bdse31" do |bdse31| 
+    bdse31.vm.hostname = "bdse31" 
+	bdse31.vm.network :public_network, ip: "192.168.33.31"
+    bdse31.vm.provider "virtualbox" do |v| 
+      v.name = "bdse31" 
+      v.cpus = 1
+      v.memory = 4096 
+    end
+    //這裡加入
+	bdse31.vm.provision "shell", path: "scripts/sethosts.sh", run: "always"
+  end 
+  
+  config.vm.define "bdse32" do |bdse32| 
+    bdse32.vm.hostname = "bdse32" 
+	bdse32.vm.network :public_network, ip: "192.168.33.32"
+    bdse32.vm.provider "virtualbox" do |v| 
+      v.name = "bdse32" 
+      v.cpus = 1
+      v.memory = 4096 
+    end
+    //這裡加入
+	bdse32.vm.provision "shell", path: "scripts/sethosts.sh", run: "always"
+  end 
+end
+```
+_____
+# 使用事先做好的Mirror，可跳過3~9步驟
+### 3.Create hadoop account, and grant root privilege
+    adduser hadoop
+    gpasswd -a hadoop sudo
+    groups hadoop
+### 4.Install Oracle Java JDK from webupd8team (https://launchpad.net/~webupd8team)
+    add-apt-repository ppa:webupd8team/java
+    apt-get update
+    apt-get install oracle-java7-set-default
+### 5.Check Oracle Java version
+    java -version
+    javac -version
+    update-alternatives --display java
+### 6.Download hadoop from apache mirror site
+    cd
+    wget http://apache.stu.edu.tw/hadoop/common/hadoop-2.7.2/hadoop-2.7.3.tar.gz
+### 7.extract hadoop tar file to /usr/local, set owner and group to hadoop user
+    tar -xvf hadoop-2.7.2.tar.gz -C /usr/local
+    mv /usr/local/hadoop-2.7.2 /usr/local/hadoop
+    chown -R hadoop:hadoop /usr/local/hadoop
+_____
 
-vagrant的VM每次啟動時會重建 /etc/hosts檔案
-所以要在vagrantfile
-加入:bdseXX.vm.provision "shell", path: "scripts/sethosts.sh", run: "always"
+### 8.Switch to hadoop user
+    su - hadoop
+### 9.Configuring SSH password-less login (on master1)
+    ssh-keygen -t dsa 
+      Enter file in which to save the key: [Return]
+	  Enter passphrase (empty for no passphrase): [Return]
+	  Enter same passphrase again: [Return]
+      
+    ls -l ~/.ssh 
+   
+    (copy public key to authorized_keys file)
+    cat ~/.ssh/id_dsa.pub >> ~/.ssh/authorized_keys
+      
+    (copy public key to other nodes in cluster)
+    ssh-copy-id -i ~/.ssh/id_dsa.pub hadoop@master2.example.org
+    ...
+    
+    (copy private key to master2,3)
+    scp ~/.ssh/id_dsa master2.example.org:/home/hadoop/.ssh
+    ...
+   
+    exit (exit hadoop user)
+# mirror 已完成的終點
+_____
+
+### 修改好Vagrantfile後
 `vagrant reload`
-登入檢查`cat /etc/hosts`
+或
+`vagrant up`
+開啟機器
+
+登入檢查
+`cat /etc/hosts`
 ping FQDN (bdse91.example.org)
 `ping -c 4 FQDN`
 
-自動ping每台兩次的script
+做自動ping每台兩次script
 ```
 ping -c 2 bdse11.example.org
 ping -c 2 bdse12.example.org
@@ -109,24 +197,21 @@ ping -c 2 bdse172.example.org
 
 查帳號存在
 `cat /etc/passwd | grep 'hadoop'`
-
-df -h 可看到/vagrant目錄=hasoop_classroom
-tar -xvf /vagrant/hadoop-2.7.3.tar.gz -C /usr/local/
-安裝好後看有沒有成功
-
-`ll /usr/local/`
-有檔案後更名
+看/vagrant目錄=hasoop_classroom
+`df -h` 
+安裝hadoop2.7.3
+`tar -xvf /vagrant/hadoop-2.7.3.tar.gz -C /usr/local/`
+有檔案後更名(方便hadoop_home的位置設定)
 `cd /usr/local/`
 `sudo mv hadoop-2.7.3/ hadoop`
-
 改權限成hadoop
 `sudo chown -R hadoop:hadoop /usr/local/hadoop`
 
-su - hadoop
+### 10.Test password-less login (on master1,2,3)
+`su - hadoop`
 
 登入每一台 FQDN 下載public key
 `ssh bdse91.example.org`....
-
 (謹慎使用，不然會不知道自己在?層夢境)
 ```
 ssh bdse11.example.org
@@ -146,21 +231,37 @@ ssh bdse172.example.org
 ### 發展很多機器前用同一個box，公鑰皆一樣~免煩惱step9 !!呀比~
 
 ----
-##### 11.設定環境變數(hadoop)
-  $nano ~/.bashrc
-  $source ~/.bashrc
-`env`
+### 11.設定環境變數(hadoop)
+`nano ~/.bashrc`
+    
+    Set HADOOP_HOME
+    export HADOOP_HOME=/usr/local/hadoop
+    # Set JAVA_HOME 
+    export JAVA_HOME=/usr/lib/jvm/java-8-oracle
+    # Add Hadoop bin and sbin directory to PATH
+    export PATH=$PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin
+
+檢驗
+`source ~/.bashrc`
 `echo $JAVA_HOME`
 `echo $HADOOP_HOME`
 `echo $PATH`
-Update hadoop-env.sh
+
+### 12.Update hadoop-env.sh
+`nano /usr/local/hadoop/etc/hadoop/hadoop-env.sh`
+
+將下列兩項取代原先環境變數
+```
+export JAVA_HOME=/usr/lib/jvm/java-8-oracle
+export HADOOP_CONF_DIR=/usr/local/hadoop/etc/hadoop
+```
 
 http://hadoop.apache.org/docs/r2.7.3/hadoop-project-dist/hadoop-common/core-default.xml
 
 
 
 
-##### 13.Configure core-site.xml
+### 13.Configure core-site.xml
 定義:hdfs(/tmp為暫存區)
 core-site.xml設定HDFS
 hdfs://bdse111.example.org (namenode，port預設8020，為了玩HA)
@@ -181,9 +282,8 @@ hdfs://bdse111.example.org (namenode，port預設8020，為了玩HA)
        #(設定為要當成NAMENODE主機的FQDN名稱)
        <description>Use HDFS as file storage engine</description>
     </property>
-
 ```
-##### 14.Configure mapred-site.xml
+### 14.Configure mapred-site.xml
 
 定義 : yarn的JobHistory
 1. hadoop 使用 yarn作job分配
@@ -208,7 +308,7 @@ hdfs://bdse111.example.org (namenode，port預設8020，為了玩HA)
     
 ```
 
-##### 15.Configure yarn-site.xml
+### 15.Configure yarn-site.xml
 定義 : yarn的ResourceManager
 1. ResourceManager的機器
 2. NodeManager 資源使用情況
@@ -234,7 +334,7 @@ hdfs://bdse111.example.org (namenode，port預設8020，為了玩HA)
     </property>	
 ```
 
-##### 16.Create /usr/local/hadoop/etc/hadoop/slaves file
+### 16.Create /usr/local/hadoop/etc/hadoop/slaves file
 定義 : 
 1. 設定Slaves為 : DataNode()、nodeManager()
 > nano /usr/local/hadoop/etc/hadoop/slaves     (slaves原本就存在)
@@ -249,12 +349,12 @@ bdse171.example.org
 ```
 
 
-##### 17.(namenode的人操作)Format the Namenode on master1 node (only once)
+### 17.(namenode的人操作)Format the Namenode on master1 node (only once)
 > hdfs namenode -format
 > start-dfs.sh
 > jps
 
-##### 18.(DataNode的人執行)
+### 18.(DataNode的人執行)
 >jps  (確認是否啟動)
 `hdfs dfs -ls /` (看全部網路環境)
 
@@ -274,14 +374,14 @@ JobHistory : bdse71.example.org:19888
 
 ---
 
-##### 19.(resourcemanager要操作)
+### 19.(resourcemanager要操作)
 start-yarn.sh
 jps
 
 
 >slaves(DataNode)電腦執行jps皆看到NodeManager
 
-#### 用瀏覽器看
+### 用瀏覽器看
 > cat /etc/hosts
 得到全部的ip
 用notepad++開才可以存檔  C:\Windows\System32\drivers\etc\hosts
@@ -292,7 +392,7 @@ jps
 (HistoryServer)http://bdse71.example.org:19888/
 (HistoryServer自己內部)http://bdse71.example.org:10020/
 
-##### 20. (HistoryServer)
+### 20. (HistoryServer)
 
 `mr-jobhistory-daemon.sh start historyserver`
 jps
@@ -301,10 +401,10 @@ jps
 
 HistoryServer檢查自己:`lsof -nPi`19888&10020(listen) 
 
-##### 21.
+### 21.
 Check YARN 	
     http://master1.example.org:8088/cluster (yarn cluster info)
-##### 22.
+### 22.
 
 /usr/local/hadoop/etc/hadoop有此環境的每台機器都可測試
 `hadoop jar /usr/local/hadoop/share/hadoop/mapreduce/hadoop-mapreduce-examples-2.7.3.jar pi 30 100`
@@ -312,6 +412,7 @@ Check YARN
 
 #### 更快速設定(改好設定檔後用SCP灑到其他主機)
 cd /usr/local/hadoop/etc/hadoop
+
 scp core-site.xml bdsexx:/usr/local/hadoop/etc/hadoop
 
 scp mapred-site.xml bdsexx:/usr/local/hadoop/etc/hadoop
